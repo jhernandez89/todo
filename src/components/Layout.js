@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row } from 'reactstrap';
 
+
+// contains all static elements like header (if there were multiple routes involved)
+// dynamic elements (via routes) are represented as children
 class Layout extends Component {
   render () {
     const { children } = this.props;
@@ -13,15 +15,13 @@ class Layout extends Component {
               <h2>ToDo</h2>
             </Row>
             <Row>
-              <BrowserRouter>
-                {children}
-              </BrowserRouter>
+              {children}
             </Row>
           </Container>
         </div>
       </div>
     )
   }
-}
+};
 
 export default Layout;

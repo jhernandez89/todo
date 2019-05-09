@@ -77,3 +77,7 @@ input {
   color: #444;
   outline: none;
 }
+
+.clickable {
+  cursor: pointer;
+}
