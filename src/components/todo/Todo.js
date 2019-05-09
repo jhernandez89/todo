@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import TodoItem from './TodoItem';
 import AddItem from './AddItem';
 import axios from 'axios';
+import sortByCompleted from '../../sort';
 
 const Todo = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async() => {
@@ -57,13 +59,16 @@ const Todo = () => {
 
   if (isLoading) return <div>loading...</div>
   if (isError) return <div>Sorry, we ran into an error, please try again later</div>
+  
+  const dataSorted = sortByCompleted(data);
+
   return (
     <div>
-    {data.map((item, i) => {
-      const { id } = item;
-      return <TodoItem key={id} item={item} markCompleted={markCompleted} deleteItem={deleteItem} i={i}/>
-    })}
-    <AddItem addItem={addItem} />
+      <AddItem addItem={addItem} />
+      {dataSorted.map((item, i) => {
+        const { id } = item;
+        return <TodoItem key={id} item={item} markCompleted={markCompleted} deleteItem={deleteItem} i={i}/>
+      })}
     </div>
   )
 }
