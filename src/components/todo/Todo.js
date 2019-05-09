@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import TodoItem from './TodoItem';
 import AddItem from './AddItem';
 import axios from 'axios';
-import uuidv1 from 'uuid/v1';
 
 const Todo = () => {
   const [data, setData] = useState();
@@ -26,16 +25,7 @@ const Todo = () => {
     fetchData()
   }, []);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const { value } = event.target.newItem
-    const newItem = {
-      title: value,
-      completed: false,
-      id: uuidv1(),
-    }
-    console.log('data', data.slice());
-
+  const addItem = (newItem) => {
     const dataWithNewItem = data.slice();
     dataWithNewItem.push(newItem);
     setData(dataWithNewItem);
@@ -49,7 +39,7 @@ const Todo = () => {
       const { id } = item;
       return <TodoItem key={id} item={item} />
     })}
-    <AddItem handleSubmit={handleSubmit} />
+    <AddItem addItem={addItem} />
     </div>
   )
 }

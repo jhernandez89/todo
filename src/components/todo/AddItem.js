@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
+import uuidv1 from 'uuid/v1';
 
 const AddItem = (props) => {
   const [newItem, setNewItem] = useState('')
-  const { handleSubmit } = props;
-  console.log('handlesubmit', handleSubmit)
+  const { addItem } = props;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const { value } = event.target.newItem
+    const newItem = {
+      title: value,
+      completed: false,
+      id: uuidv1(),
+    }
+    setNewItem('');
+    addItem(newItem);
+    console.log(newItem);
+  }
 
     return (
         <form onSubmit={handleSubmit}>
