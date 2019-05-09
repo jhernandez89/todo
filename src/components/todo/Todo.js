@@ -25,6 +25,20 @@ const Todo = () => {
     fetchData()
   }, []);
 
+  const markCompleted = (id) => {
+    const updatedData = data.map(item => {
+      if(item.id === id) {
+        return {
+          ...item,
+          completed: !item.completed,
+        }
+      } else {
+        return item
+      }
+    })
+    setData(updatedData);
+  }
+
   const addItem = (newItem) => {
     const dataWithNewItem = data.slice();
     dataWithNewItem.push(newItem);
@@ -37,7 +51,7 @@ const Todo = () => {
     <div>
     {data.map(item => {
       const { id } = item;
-      return <TodoItem key={id} item={item} />
+      return <TodoItem key={id} item={item} markCompleted={markCompleted} />
     })}
     <AddItem addItem={addItem} />
     </div>
