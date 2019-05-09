@@ -6,13 +6,20 @@ class Layout extends Component {
   render () {
     const { children } = this.props;
     return (
-      <Container fluid={true}>
-        <Row>
-          <BrowserRouter>
-            {children}
-          </BrowserRouter>
-        </Row>
-      </Container>
+      <div id="app_wrapper">
+        <div>
+          <Container fluid={true}>
+            <Row id="header">
+              <h2>ToDo</h2>
+            </Row>
+            <Row>
+              <BrowserRouter>
+                {children}
+              </BrowserRouter>
+            </Row>
+          </Container>
+        </div>
+      </div>
     )
   }
 }

@@ -41,11 +41,11 @@ const Todo = () => {
 
   const deleteItem = (id) => {
     const updatedData = data.filter(item => {
-      if(item.id !== id) {
+      if(item.id !== id)
         return item;
-      }
+
+      return null
     });
-    console.log('udpateddata!', updatedData);
     setData(updatedData);
   }
 
@@ -59,9 +59,9 @@ const Todo = () => {
   if (isError) return <div>Sorry, we ran into an error, please try again later</div>
   return (
     <div>
-    {data.map(item => {
+    {data.map((item, i) => {
       const { id } = item;
-      return <TodoItem key={id} item={item} markCompleted={markCompleted} deleteItem={deleteItem}/>
+      return <TodoItem key={id} item={item} markCompleted={markCompleted} deleteItem={deleteItem} i={i}/>
     })}
     <AddItem addItem={addItem} />
     </div>

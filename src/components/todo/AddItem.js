@@ -4,6 +4,7 @@ import uuidv1 from 'uuid/v1';
 const AddItem = (props) => {
   const [newItem, setNewItem] = useState('')
   const { addItem } = props;
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const { value } = event.target.newItem
@@ -25,7 +26,7 @@ const AddItem = (props) => {
             placeholder="New Todo"
             type="text"
             name="newItem"
-            require
+            required
           />
           <button type="submit">Add</button>
         </form>
