@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import TodoItem from './TodoItem';
+import AddItem from './AddItem';
 import axios from 'axios';
+import uuidv1 from 'uuid/v1';
 
 const Todo = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true)
-  const [isError, setIsError] = useState(null);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchData = async() => {
@@ -23,15 +25,31 @@ const Todo = () => {
     }
     fetchData()
   }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const { value } = event.target.newItem
+    const newItem = {
+      title: value,
+      completed: false,
+      id: uuidv1(),
+    }
+    console.log('data', data.slice());
+
+    const dataWithNewItem = data.slice();
+    dataWithNewItem.push(newItem);
+    setData(dataWithNewItem);
+  }
+
   if (isLoading) return <div>loading...</div>
   if (isError) return <div>Sorry, we ran into an error, please try again later</div>
   return (
     <div>
     {data.map(item => {
       const { id } = item;
-      console.log('item', id);
       return <TodoItem key={id} item={item} />
     })}
+    <AddItem handleSubmit={handleSubmit} />
     </div>
   )
 }
