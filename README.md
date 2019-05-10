@@ -4,7 +4,7 @@ This app is a basic todo web app.  The app makes an initial call to the followin
 
 ### Storage
 
-This stores the results in react class state, and does not store information via database or browser storage.
+This stores the results in react class state and does not store information via database or browser storage.
 
 ## React default readme
 
