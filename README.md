@@ -2,7 +2,7 @@
 
 This app is a basic todo web app.  The app makes an initial call to the following endpoint 'https://jsonplaceholder.typicode.com/todos' and keeps the top 3 results in order to start the user out with items.
 
-## Storage
+### Storage
 
 This stores the results in react class state, and does not store information via database or browser storage.
 
