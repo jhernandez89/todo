@@ -11,11 +11,13 @@ const TodoItem = (props) => {
   const { item, markCompleted, deleteItem, i } = props;
   const { title, id, completed } = item;
   const completedIcon = (completed ? done : pending);
+  // trigger animation when task is completed
+  const animate = completed ? 'animated' : '';
   // off-color every odd-numbered item
   const background = (i % 2 === 0) ? white : offWhite;
 
   return (
-    <div className="todo_item_wrapper" style={{backgroundColor: background}} >
+    <div className={(animate) + " todo_item_wrapper jackInTheBox"} style={{backgroundColor: background}} >
       <div>{title}</div>
       <div className="icon_wrapper">
         <img className="clickable" onClick={() => deleteItem(id)} src={deleteIcon} alt="completed icon"/>
