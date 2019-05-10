@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import PropTypes from 'prop-types';
 import done from '../../assets/done.png';
 import pending from '../../assets/pending.png';
 import deleteIcon from '../../assets/delete.png';
@@ -12,12 +13,12 @@ const TodoItem = (props) => {
   const { title, id, completed } = item;
   const completedIcon = (completed ? done : pending);
   // trigger animation when task is completed
-  const animate = completed ? 'animated' : '';
+  const animate = completed ? 'animated jackInTheBox' : '';
   // off-color every odd-numbered item
   const background = (i % 2 === 0) ? white : offWhite;
 
   return (
-    <div className={(animate) + " todo_item_wrapper jackInTheBox"} style={{backgroundColor: background}} >
+    <div className={(animate) + " todo_item_wrapper"} style={{backgroundColor: background}} >
       <div>{title}</div>
       <div className="icon_wrapper">
         <img className="clickable" onClick={() => deleteItem(id)} src={deleteIcon} alt="completed icon"/>
@@ -25,6 +26,13 @@ const TodoItem = (props) => {
       </div>
     </div>
   )
+};
+
+TodoItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  markCompleted: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
+  i: PropTypes.number.isRequired,
 };
 
 export default TodoItem;

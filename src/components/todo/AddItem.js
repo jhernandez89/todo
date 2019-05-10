@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import uuidv1 from 'uuid/v1';
 
 // UI components for adding item as well as responsible for creation of item object
@@ -34,5 +35,9 @@ const AddItem = (props) => {
         </form>
     )
 }
+
+AddItem.propTypes = {
+  addItem: PropTypes.func.isRequired
+};
 
 export default AddItem;
