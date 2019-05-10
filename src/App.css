@@ -11,8 +11,8 @@ body {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  overflow-x: scroll;
   padding: 15px;
+  word-wrap: break-word;
 }
 
 .icon_wrapper {
