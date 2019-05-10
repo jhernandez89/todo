@@ -3,13 +3,13 @@ import TodoItem from './TodoItem';
 import AddItem from './AddItem';
 import axios from 'axios';
 import sortByCompleted from '../../sort';
-
 // parent container for Todo app.  Set to root route since this app only does one thing.
 const Todo = () => {
   // react hooks to set state in functional component (came out in v16)
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [draggedElement, setDraggedElement] = useState(null);
 
   // API call to start out with 3 tasks
   useEffect(() => {
@@ -65,17 +65,36 @@ const Todo = () => {
     setData(dataWithNewItem);
   };
 
+  // user starts dragging item
+  const dragStart = (item) => {
+    setDraggedElement(item);
+  }
+
+  // triggers when element is dragged over
+  const dragOver = (id, i) => {
+    // don't do anything if it's over itself
+    if(id === draggedElement.id)
+      return;
+
+    // take current element out
+    const dataReorted = data.filter((item) => item !== draggedElement);
+
+    // put current element back in at new location
+    dataReorted.splice(i, 0, draggedElement);
+    setData(dataReorted);
+
+  }
+
   // wait for promise to resolve and error handling
   if (isLoading) return <div>loading...</div>;
   if (isError) return <div>Sorry, we ran into an error, please try again later</div>;
   
   // sort data by uncompleted items first
-  const dataSorted = sortByCompleted(data);
 
   return (
     <div>
       <AddItem addItem={addItem} />
-      {dataSorted.map((item, i) => {
+      {data.map((item, i) => {
         const { id } = item;
         return (
           <TodoItem 
@@ -83,6 +102,8 @@ const Todo = () => {
             item={item}
             markCompleted={markCompleted}
             deleteItem={deleteItem}
+            dragStart={dragStart}
+            dragOver={dragOver}
             i={i}
           />
         )
