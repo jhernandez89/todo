@@ -3,6 +3,7 @@ import TodoItem from './TodoItem';
 import AddItem from './AddItem';
 import axios from 'axios';
 import sortByCompleted from '../../sort';
+
 // parent container for Todo app.  Set to root route since this app only does one thing.
 const Todo = () => {
   // react hooks to set state in functional component (came out in v16)
@@ -32,19 +33,25 @@ const Todo = () => {
     fetchData()
   }, []);
 
+  const reInsertElementAndToggleComplete = (element, i) => {
+    const dataResorted = data.filter((item) => item !== element);
+    const toggleCompleted = {
+      ...element,
+      completed: !element.completed,
+    }
+    dataResorted.splice(i, 0, toggleCompleted);
+    return dataResorted;
+  }
+
   // Mark todo item as completed
-  const markCompleted = (id) => {
-    const updatedData = data.map(item => {
-      if(item.id === id) {
-        return {
-          ...item,
-          completed: !item.completed,
-        }
-      } else {
-        return item;
-      }
-    })
-    setData(updatedData);
+  const markCompleted = (currentELement) => {
+    const dataResorted = reInsertElementAndToggleComplete(currentELement, data.length-1);
+    setData(dataResorted);
+  };
+
+  const markIncompleted = (currentELement) => {
+    const dataResorted = reInsertElementAndToggleComplete(currentELement, 0);
+    setData(dataResorted);
   };
 
   // Delete todo item
@@ -109,6 +116,7 @@ const Todo = () => {
             key={id}
             item={item}
             markCompleted={markCompleted}
+            markIncompleted={markIncompleted}
             deleteItem={deleteItem}
             dragStart={dragStart}
             dragOver={dragOver}

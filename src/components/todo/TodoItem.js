@@ -9,12 +9,19 @@ const offWhite = 'rgb(250, 250, 250)';
 
 // Displays UI todo item container for each individual item
 const TodoItem = (props) => {
-  const { item, markCompleted, deleteItem, i, dragOver, dragEnd, dragStart } = props;
+  const { item, markCompleted, markIncompleted, deleteItem, i, dragOver, dragEnd, dragStart } = props;
   const { title, id, completed } = item;
   const completedIcon = (completed ? done : pending);
   // off-color every odd-numbered item
   const background = (i % 2 === 0) ? white : offWhite;
 
+  const toggleCompleted = () => {
+    if(!completed) {
+      markCompleted(item);
+    } else {
+      markIncompleted(item)
+    }
+  }
 
   return (
     <div
@@ -27,8 +34,8 @@ const TodoItem = (props) => {
     >
       <div>{i+1}: {title}</div>
       <div className="icon_wrapper">
-        <img className="clickable" onClick={() => deleteItem(id)} src={deleteIcon} alt="completed icon"/>
-        <img className="clickable" onClick={() => markCompleted(id)} src={completedIcon} alt="completed icon"/>
+        <img className="clickable" onClick={() => deleteItem()} src={deleteIcon} alt="completed icon"/>
+        <img className="clickable" onClick={toggleCompleted} src={completedIcon} alt="completed icon"/>
       </div>
     </div>
   )
@@ -36,9 +43,13 @@ const TodoItem = (props) => {
 
 TodoItem.propTypes = {
   item: PropTypes.object.isRequired,
+  markIncompleted: PropTypes.func.isRequired,
   markCompleted: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
   i: PropTypes.number.isRequired,
+  dragOver: PropTypes.func.isRequired,
+  dragEnd: PropTypes.func.isRequired,
+  dragStart: PropTypes.func.isRequired,
 };
 
 export default TodoItem;
