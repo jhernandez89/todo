@@ -10,6 +10,7 @@ const Todo = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [draggedElement, setDraggedElement] = useState(null);
+  const [currentDraggedIndex, setCurrentDraggedIndex] = useState(null);
 
   // API call to start out with 3 tasks
   useEffect(() => {
@@ -68,12 +69,19 @@ const Todo = () => {
   // user starts dragging item
   const dragStart = (item) => {
     setDraggedElement(item);
-  }
+  };
 
+  // reset dragged elements in state
+  const dragEnd = () => {
+    setCurrentDraggedIndex(null);
+    setDraggedElement(null)
+  };
   // triggers when element is dragged over
+  // using drag over instead of drag end to show users live
   const dragOver = (id, i) => {
-    // don't do anything if it's over itself
-    if(id === draggedElement.id)
+    // don't do anything if it's over itself or if it's dragging over
+    // the same element multiple times
+    if(id === draggedElement.id || i === currentDraggedIndex)
       return;
 
     // take current element out
@@ -82,7 +90,7 @@ const Todo = () => {
     // put current element back in at new location
     dataReorted.splice(i, 0, draggedElement);
     setData(dataReorted);
-
+    setCurrentDraggedIndex(i);
   }
 
   // wait for promise to resolve and error handling
@@ -104,6 +112,7 @@ const Todo = () => {
             deleteItem={deleteItem}
             dragStart={dragStart}
             dragOver={dragOver}
+            dragEnd={dragEnd}
             i={i}
           />
         )

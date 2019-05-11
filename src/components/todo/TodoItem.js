@@ -23,6 +23,7 @@ const TodoItem = (props) => {
       draggable="true"
       onDragOver={() => dragOver(id, i)}
       onDragStart={() => dragStart(item)}
+      onDragEnd={dragEnd}
     >
       <div>{i+1}: {title}</div>
       <div className="icon_wrapper">
