@@ -34,7 +34,7 @@ const TodoItem = (props) => {
     >
       <div>{i+1}: {title}</div>
       <div className="icon_wrapper">
-        <img className="clickable" onClick={() => deleteItem()} src={deleteIcon} alt="completed icon"/>
+        <img className="clickable" onClick={() => deleteItem(id)} src={deleteIcon} alt="completed icon"/>
         <img className="clickable" onClick={toggleCompleted} src={completedIcon} alt="completed icon"/>
       </div>
     </div>
